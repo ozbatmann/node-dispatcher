@@ -17,7 +17,7 @@ var app = express();
 app.use( bodyParser.json() );
 
 
-var informationServiceURL = "http://localhost:8083/api/v1/mail/send";
+var informationServiceURL = "http://157.230.125.223:8083/api/v1/mail/send";
 
 
 
@@ -31,6 +31,9 @@ app.post('/mail/send',function(request,response){
             cmd.get(
                 'docker run -p 8083:8083 d4500ba6b2fc',
                 function(err, data, stderr){
+                    console.log("Err",err)
+                    console.log("Data",data)
+                    console.log("Stderr",stderr)
                     axios.post(informationServiceURL,request.body)
                         .then(res => {
                             response.send(res)
