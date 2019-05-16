@@ -17,7 +17,7 @@ var app = express();
 app.use( bodyParser.json() );
 
 
-var informationServiceURL = "http://157.230.125.223:8083/api/v1/mail/send";
+var informationServiceURL = "http://localhost:8083/api/v1/mail/send";
 
 
 
