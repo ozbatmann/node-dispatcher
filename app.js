@@ -1,9 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
-var bodyParser = require('body-parser')
 const axios = require('axios');
-var cmd = require('node-cmd');
-
+var nrc = require('node-run-cmd');
 
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -28,20 +26,16 @@ app.post('/mail/send',function(request,response){
             response.send(res)
         })
         .catch(error => {
-            cmd.get(
-                'docker run -p 8083:8083 d4500ba6b2fc',
-                function(err, data, stderr){
-                    console.log("Err",err)
-                    console.log("Data",data)
-                    console.log("Stderr",stderr)
-                    axios.post(informationServiceURL,request.body)
-                        .then(res => {
-                            response.send(res)
-                        }).catch(error => {
-                        console.log(error)
-                    })
-                }
-            );
+            nrc.run( 'docker run -p 8083:8083 d4500ba6b2fc').then(function(exitCodes) {
+                axios.post(informationServiceURL,request.body)
+                    .then(res => {
+                        response.send(res)
+                    }).catch(error => {
+                    console.log(error)
+                })
+            }, function(err) {
+                console.log('Command failed to run with error: ', err);
+            });
         });
 
 });
