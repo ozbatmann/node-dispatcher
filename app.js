@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 const axios = require('axios');
 var nrc = require('node-run-cmd');
+var bodyParser = require('body-parser')
 
 var path = require('path');
 var cookieParser = require('cookie-parser');
